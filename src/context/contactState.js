@@ -3,11 +3,12 @@ import contactReducer from './contactReducer';
 
 const initialState = {
   contacts: [
-    {
-      name: 'Luke Skywalker',
-      email: 'luke.skywalker@tatooine.com',
-      phone: '362-2522-144',
-    },
+    // {
+    //   id: '1212',
+    //   name: 'Luke Skywalker',
+    //   email: 'luke.skywalker@tatooine.com',
+    //   phone: '362-2522-144',
+    // },
   ],
 };
 

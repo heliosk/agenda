@@ -9,18 +9,18 @@ import { useTable } from 'react-table';
 const ContactList = () => {
   const { contactState } = useContext(ContactContext);
   const [showModal, setShowModal] = useState(false);
+  const [currentId, setCurrentId] = useState(null);
 
   const handleModal = () => {
     setShowModal(!showModal);
   };
 
-  const rawData = [
-    { avatar: 'J', firstName: 'jane', lastName: 'doe', age: 20 },
-    { avatar: 'J', firstName: 'john', lastName: 'smith', age: 21 },
-  ];
+  const onClickEdit = (id) => {
+    setCurrentId(id);
+    setShowModal(true);
+  };
 
-  console.log(rawData);
-  console.log(contactState.contacts);
+  const onClickDelete = (id) => {};
 
   const tableColumns = [
     {
@@ -79,7 +79,18 @@ const ContactList = () => {
             return (
               <tr {...row.getRowProps()}>
                 {row.cells.map((cell) => {
-                  return (
+                  return cell.column.id === 'options' ? (
+                    <td {...cell.getCellProps()}>
+                      <div className='contact-options'>
+                        <i
+                          className='fas fa-pencil-alt'
+                          onClick={() => onClickEdit(cell.row.original.id)}></i>
+                        <i
+                          className='fas fa-trash-alt'
+                          onClick={onClickDelete}></i>
+                      </div>
+                    </td>
+                  ) : (
                     <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
                   );
                 })}
@@ -93,21 +104,25 @@ const ContactList = () => {
 
   return (
     <div id='contact-list-container'>
-      {/* {contactState.contacts.length < 1 ? (
+      {contactState.contacts.length < 1 ? (
         <div id='contact-create'>
           <img src={IcBook} alt='contato' />
           <p>Nenhum contato foi criado ainda.</p>
           <ButtonWithIcon
-            icon={<i class='fa fa-plus' aria-hidden='true'></i>}
+            icon={<i className='fa fa-plus' aria-hidden='true'></i>}
             styles={'primary'}
             text='Criar contato'
             onClick={handleModal}
           />
         </div>
-      ) : ( */}
-      <Table />
-      {/* )}
-      <ContactModal isOpen={showModal} closeModal={handleModal} /> */}
+      ) : (
+        <Table />
+      )}
+      <ContactModal
+        isOpen={showModal}
+        closeModal={handleModal}
+        currentId={currentId}
+      />
     </div>
   );
 };

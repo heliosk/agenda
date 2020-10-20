@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { ContactContext } from '../../context/contactState';
 import * as types from '../../context/types';
@@ -21,16 +21,30 @@ const customStyles = {
   },
 };
 
-const ContactModal = ({ isOpen, closeModal }) => {
-  const { contactDispatch } = useContext(ContactContext);
+const ContactModal = ({ isOpen, closeModal, currentId }) => {
+  const { contactState, contactDispatch } = useContext(ContactContext);
+  const [isEditMode, setIsEditMode] = useState(false);
 
   const initialState = {
+    id: uuidv4(),
     name: '',
     email: '',
     phone: '',
   };
 
   const [formData, setFormData] = useState(initialState);
+
+  const afterOpenModal = async () => {
+    if (currentId) {
+      const editContact = await contactState.contacts.filter((contact) => {
+        return contact.id === currentId;
+      });
+
+      const { id, name, email, phone } = editContact[0];
+      setFormData({ ...formData, id, name, email, phone });
+      setIsEditMode(true);
+    }
+  };
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -44,17 +58,29 @@ const ContactModal = ({ isOpen, closeModal }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const { name, email, phone } = formData;
+    const { id, name, email, phone } = formData;
 
-    contactDispatch({
-      type: types.ADD_CONTACT,
-      payload: {
-        id: uuidv4(),
-        name,
-        email,
-        phone,
-      },
-    });
+    if (isEditMode) {
+      contactDispatch({
+        type: types.UPDATE_CONTACT,
+        payload: {
+          id,
+          name,
+          email,
+          phone,
+        },
+      });
+    } else {
+      contactDispatch({
+        type: types.ADD_CONTACT,
+        payload: {
+          id,
+          name,
+          email,
+          phone,
+        },
+      });
+    }
 
     handleCloseModal();
   };
@@ -68,6 +94,7 @@ const ContactModal = ({ isOpen, closeModal }) => {
       appElement={document.getElementById('root')}
       id='contact-modal'
       isOpen={isOpen}
+      onAfterOpen={afterOpenModal}
       onRequestClose={closeModal}
       style={customStyles}>
       <form onSubmit={handleSubmit}>

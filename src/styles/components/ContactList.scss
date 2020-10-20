@@ -20,6 +20,11 @@
   }
 }
 
+.contact-options i {
+  margin-left: 16px;
+  cursor: pointer;
+}
+
 .contact-table {
   font-size: 14px;
   border-spacing: 0;
@@ -34,13 +39,17 @@
   text-align: center;
 }
 
+.contact-table td:last-child {
+  text-align: center;
+  width: 100px;
+}
+
 .contact-table td {
   color: $dark;
 }
 
 .contact-table tr:hover {
   background-color: $very-light-pink;
-  cursor: pointer;
 }
 
 .contact-table td,
