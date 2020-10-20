@@ -22,8 +22,6 @@ const Header = () => {
       type: types.FIND_CONTACT,
       payload: text.current.value,
     });
-
-    console.log(contactState);
   };
 
   return (

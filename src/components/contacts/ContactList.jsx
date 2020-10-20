@@ -2,6 +2,7 @@ import React, { useState, useContext, useMemo } from 'react';
 import { ContactContext } from '../../context/contactState';
 import ContactModal from './ContactModal';
 import ButtonWithIcon from '../ButtonWithIcon';
+import Avatar from '../Avatar';
 
 import IcBook from '../../images/ic-book.svg';
 import { useTable } from 'react-table';
@@ -100,23 +101,35 @@ const ContactList = () => {
             return (
               <tr {...row.getRowProps()}>
                 {row.cells.map((cell) => {
-                  console.log(cell.row.original.id);
-                  return cell.column.id === 'options' ? (
-                    <td {...cell.getCellProps()}>
-                      <div className='contact-options'>
-                        <i
-                          className='fas fa-pencil-alt'
-                          onClick={() => onClickEdit(cell.row.original.id)}></i>
-                        <i
-                          className='fas fa-trash-alt'
-                          onClick={() =>
-                            onClickDelete(cell.row.original.id)
-                          }></i>
-                      </div>
-                    </td>
-                  ) : (
-                    <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
-                  );
+                  switch (cell.column.id) {
+                    case 'avatar':
+                      return (
+                        <td {...cell.getCellProps()}>
+                          <Avatar name={cell.row.original.name} />
+                        </td>
+                      );
+                    case 'options':
+                      return (
+                        <td {...cell.getCellProps()}>
+                          <div className='contact-options'>
+                            <i
+                              className='fas fa-pencil-alt'
+                              onClick={() =>
+                                onClickEdit(cell.row.original.id)
+                              }></i>
+                            <i
+                              className='fas fa-trash-alt'
+                              onClick={() =>
+                                onClickDelete(cell.row.original.id)
+                              }></i>
+                          </div>
+                        </td>
+                      );
+                    default:
+                      return (
+                        <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                      );
+                  }
                 })}
               </tr>
             );
