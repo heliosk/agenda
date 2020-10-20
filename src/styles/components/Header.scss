@@ -10,10 +10,10 @@ header {
   flex-grow: 1;
 }
 
-.search {
+.search-box {
   position: relative;
   background-color: $light-gray;
-  flex-grow: 3;
+  flex-grow: 5;
   padding: 0 16px;
 
   input {

@@ -1,0 +1,17 @@
+#contact-list-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: $light-gray;
+  height: calc(100vh - 64px);
+
+  img {
+    margin-top: 160px;
+  }
+
+  p,
+  button {
+    margin-top: 24px;
+  }
+}

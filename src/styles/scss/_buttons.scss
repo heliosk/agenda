@@ -1,0 +1,35 @@
+@mixin shadow {
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.16);
+}
+
+.button {
+  border: none;
+  border-radius: 20px;
+  padding: 12px 22px;
+  width: auto;
+
+  outline: none;
+  @include shadow;
+  cursor: pointer;
+
+  &:active {
+    box-shadow: none;
+  }
+}
+
+.primary {
+  background-color: $light-yellowish-green;
+  color: $salmon;
+  font-weight: 500;
+}
+
+.success {
+  background-color: $salmon;
+  color: $white-two;
+}
+
+.default {
+  background-color: $white-two;
+  color: $salmon;
+  box-shadow: none;
+}

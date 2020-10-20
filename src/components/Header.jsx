@@ -9,7 +9,7 @@ const Header = () => {
       <div className='logo'>
         <img src={IcLogo} alt='logo' />
       </div>
-      <div className='search'>
+      <div className='search-box'>
         <input type='text' placeholder='Buscar...' />
         <img src={IcSearch} alt='buscar' />
       </div>
