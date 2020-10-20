@@ -10,10 +10,14 @@ header {
   flex-grow: 1;
 }
 
+.create-user {
+  margin: 10px;
+}
+
 .search-box {
   position: relative;
   background-color: $light-gray;
-  flex-grow: 5;
+  flex-grow: 3;
   padding: 0 16px;
 
   input {

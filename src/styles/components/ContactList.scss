@@ -1,10 +1,13 @@
 #contact-list-container {
+  background-color: $light-gray;
+}
+
+#contact-create {
+  height: calc(100vh - 64px);
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  background-color: $light-gray;
-  height: calc(100vh - 64px);
 
   img {
     margin-top: 160px;

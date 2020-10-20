@@ -1,4 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { v4 as uuidv4 } from 'uuid';
+import { ContactContext } from '../../context/contactState';
+import * as types from '../../context/types';
 import Modal from 'react-modal';
 
 const customStyles = {
@@ -19,20 +22,41 @@ const customStyles = {
 };
 
 const ContactModal = ({ isOpen, closeModal }) => {
-  const [formData, setFormData] = useState({
+  const { contactDispatch } = useContext(ContactContext);
+
+  const initialState = {
     name: '',
     email: '',
     phone: '',
-  });
+  };
+
+  const [formData, setFormData] = useState(initialState);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const handleCloseModal = () => {
+    setFormData(initialState);
+    closeModal();
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    //add localstorage
-    console.log(formData);
+
+    const { name, email, phone } = formData;
+
+    contactDispatch({
+      type: types.ADD_CONTACT,
+      payload: {
+        id: uuidv4(),
+        name,
+        email,
+        phone,
+      },
+    });
+
+    handleCloseModal();
   };
 
   const checkEmptyForm = () => {
@@ -41,6 +65,7 @@ const ContactModal = ({ isOpen, closeModal }) => {
 
   return (
     <Modal
+      appElement={document.getElementById('root')}
       id='contact-modal'
       isOpen={isOpen}
       onRequestClose={closeModal}
@@ -80,7 +105,7 @@ const ContactModal = ({ isOpen, closeModal }) => {
           </div>
         </div>
         <div className='footer'>
-          <button className='button default' onClick={closeModal}>
+          <button className='button default' onClick={handleCloseModal}>
             Cancelar
           </button>
           <button
