@@ -20,7 +20,14 @@ const Header = () => {
         <img src={IcLogo} alt='logo' />
       </div>
       <div className='create-user'>
-        <ButtonWithIcon text='Criar contato' onClick={handleModal} />
+        {contactState.contacts.length > 0 && (
+          <ButtonWithIcon
+            icon={<i className='fa fa-plus' aria-hidden='true'></i>}
+            styles={'primary slim'}
+            text='Criar contato'
+            onClick={handleModal}
+          />
+        )}
       </div>
       <div className='search-box'>
         <input type='text' placeholder='Buscar...' />

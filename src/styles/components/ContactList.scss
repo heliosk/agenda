@@ -1,9 +1,10 @@
 #contact-list-container {
   background-color: $light-gray;
+  height: calc(100vh - 64px);
+  padding: 16px;
 }
 
 #contact-create {
-  height: calc(100vh - 64px);
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -17,4 +18,47 @@
   button {
     margin-top: 24px;
   }
+}
+
+.contact-table {
+  font-size: 14px;
+  border-spacing: 0;
+  border-collapse: separate;
+  border: 1px solid $white;
+  border-radius: 4px;
+  width: 100%;
+}
+
+.contact-table td:nth-child(1) {
+  width: 40px;
+  text-align: center;
+}
+
+.contact-table td {
+  color: $dark;
+}
+
+.contact-table tr:hover {
+  background-color: $very-light-pink;
+  cursor: pointer;
+}
+
+.contact-table td,
+.contact-table th {
+  height: 40px;
+  padding: 12px;
+  border-top: 1px solid $white;
+}
+
+.contact-table th {
+  text-align: left;
+  border-top: none;
+  font-size: 13px;
+  font-weight: 400;
+  color: $bluey-grey;
+}
+
+.contact-table td:first-child,
+.contact-table th:first-child {
+  border-left: none;
 }
