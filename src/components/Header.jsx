@@ -1,5 +1,6 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useRef } from 'react';
 import { ContactContext } from '../context/contactState';
+import * as types from '../context/types';
 import ContactModal from './contacts/ContactModal';
 import ButtonWithIcon from './ButtonWithIcon';
 
@@ -7,11 +8,22 @@ import IcLogo from '../images/ic-logo.svg';
 import IcSearch from '../images/ic-search.svg';
 
 const Header = () => {
-  const { contactState } = useContext(ContactContext);
+  const { contactState, contactDispatch } = useContext(ContactContext);
   const [showModal, setShowModal] = useState(false);
+
+  const text = useRef('');
 
   const handleModal = () => {
     setShowModal(!showModal);
+  };
+
+  const onChange = () => {
+    contactDispatch({
+      type: types.FIND_CONTACT,
+      payload: text.current.value,
+    });
+
+    console.log(contactState);
   };
 
   return (
@@ -30,7 +42,12 @@ const Header = () => {
         )}
       </div>
       <div className='search-box'>
-        <input type='text' placeholder='Buscar...' />
+        <input
+          type='text'
+          placeholder='Buscar...'
+          onChange={onChange}
+          ref={text}
+        />
         <img src={IcSearch} alt='buscar' />
       </div>
       <ContactModal isOpen={showModal} closeModal={handleModal} />

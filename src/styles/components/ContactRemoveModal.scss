@@ -1,0 +1,24 @@
+#contact-remove-modal {
+  width: 432px;
+  color: $dark;
+
+  .header,
+  .footer {
+    padding: 16px;
+    margin-top: 15px 0;
+  }
+
+  .header {
+    border-bottom: 1px solid $cloudy-blue;
+  }
+
+  .footer {
+    display: flex;
+    justify-content: flex-end;
+    border-top: 1px solid $cloudy-blue;
+  }
+
+  .body {
+    padding: 16px 0 57px 16px;
+  }
+}

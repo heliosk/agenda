@@ -5,22 +5,13 @@ import ButtonWithIcon from '../ButtonWithIcon';
 
 import IcBook from '../../images/ic-book.svg';
 import { useTable } from 'react-table';
+import ContactRemoveModal from './ContactRemoveModal';
 
 const ContactList = () => {
   const { contactState } = useContext(ContactContext);
   const [showModal, setShowModal] = useState(false);
+  const [showRemoveModal, setShowRemoveModal] = useState(false);
   const [currentId, setCurrentId] = useState(null);
-
-  const handleModal = () => {
-    setShowModal(!showModal);
-  };
-
-  const onClickEdit = (id) => {
-    setCurrentId(id);
-    setShowModal(true);
-  };
-
-  const onClickDelete = (id) => {};
 
   const tableColumns = [
     {
@@ -45,9 +36,39 @@ const ContactList = () => {
     },
   ];
 
+  const handleModal = () => {
+    if (showModal) {
+      setCurrentId(null);
+    }
+
+    setShowModal(!showModal);
+  };
+
+  const handleRemoveModal = () => {
+    if (showRemoveModal) {
+      setCurrentId(null);
+    }
+
+    setShowRemoveModal(!showRemoveModal);
+  };
+
+  const onClickEdit = (id) => {
+    setCurrentId(id);
+    setShowModal(true);
+  };
+
+  const onClickDelete = (id) => {
+    setCurrentId(id);
+    setShowRemoveModal(true);
+  };
+
   const Table = () => {
+    const currentData = contactState.filtered
+      ? contactState.filtered
+      : contactState.contacts;
+
     const columns = useMemo(() => tableColumns, []);
-    const data = useMemo(() => contactState.contacts, []);
+    const data = useMemo(() => currentData, [currentData]);
 
     const tableInstance = useTable({
       columns,
@@ -79,6 +100,7 @@ const ContactList = () => {
             return (
               <tr {...row.getRowProps()}>
                 {row.cells.map((cell) => {
+                  console.log(cell.row.original.id);
                   return cell.column.id === 'options' ? (
                     <td {...cell.getCellProps()}>
                       <div className='contact-options'>
@@ -87,7 +109,9 @@ const ContactList = () => {
                           onClick={() => onClickEdit(cell.row.original.id)}></i>
                         <i
                           className='fas fa-trash-alt'
-                          onClick={onClickDelete}></i>
+                          onClick={() =>
+                            onClickDelete(cell.row.original.id)
+                          }></i>
                       </div>
                     </td>
                   ) : (
@@ -121,6 +145,11 @@ const ContactList = () => {
       <ContactModal
         isOpen={showModal}
         closeModal={handleModal}
+        currentId={currentId}
+      />
+      <ContactRemoveModal
+        isOpen={showRemoveModal}
+        closeModal={handleRemoveModal}
         currentId={currentId}
       />
     </div>
