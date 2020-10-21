@@ -86,7 +86,7 @@ const ContactModal = ({ isOpen, closeModal, currentId }) => {
   };
 
   const checkEmptyForm = () => {
-    return Object.values(formData).every((x) => x === '');
+    return Object.values(formData).every((item) => item === '');
   };
 
   return (

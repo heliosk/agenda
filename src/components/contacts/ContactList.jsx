@@ -1,4 +1,5 @@
 import React, { useState, useContext, useMemo } from 'react';
+import { motion } from 'framer-motion';
 import { ContactContext } from '../../context/contactState';
 import ContactModal from './ContactModal';
 import ButtonWithIcon from '../ButtonWithIcon';
@@ -18,6 +19,9 @@ const ContactList = () => {
     {
       Header: '',
       accessor: 'avatar',
+      Cell: ({ row }) => {
+        return <Avatar name={row.original.name} />;
+      },
     },
     {
       Header: 'Nome',
@@ -34,6 +38,18 @@ const ContactList = () => {
     {
       Header: '',
       accessor: 'options',
+      Cell: ({ row }) => {
+        return (
+          <div className='contact-options'>
+            <i
+              className='fas fa-pencil-alt'
+              onClick={() => onClickEdit(row.original.id)}></i>
+            <i
+              className='fas fa-trash-alt'
+              onClick={() => onClickDelete(row.original.id)}></i>
+          </div>
+        );
+      },
     },
   ];
 
@@ -41,7 +57,6 @@ const ContactList = () => {
     if (showModal) {
       setCurrentId(null);
     }
-
     setShowModal(!showModal);
   };
 
@@ -49,7 +64,6 @@ const ContactList = () => {
     if (showRemoveModal) {
       setCurrentId(null);
     }
-
     setShowRemoveModal(!showRemoveModal);
   };
 
@@ -61,6 +75,15 @@ const ContactList = () => {
   const onClickDelete = (id) => {
     setCurrentId(id);
     setShowRemoveModal(true);
+  };
+
+  const backgroundColor = (itemInserted) => {
+    return itemInserted
+      ? {
+          animate: { backgroundColor: ['#fff3f2', '#f8f9fd'] },
+          transition: { delay: '10', duration: 1 },
+        }
+      : {};
   };
 
   const Table = () => {
@@ -98,40 +121,19 @@ const ContactList = () => {
         <tbody {...getTableBodyProps()}>
           {rows.map((row) => {
             prepareRow(row);
+
+            let itemInserted = Number(row.id) === rows.length - 1;
+
             return (
-              <tr {...row.getRowProps()}>
+              <motion.tr
+                {...row.getRowProps()}
+                {...backgroundColor(itemInserted)}>
                 {row.cells.map((cell) => {
-                  switch (cell.column.id) {
-                    case 'avatar':
-                      return (
-                        <td {...cell.getCellProps()}>
-                          <Avatar name={cell.row.original.name} />
-                        </td>
-                      );
-                    case 'options':
-                      return (
-                        <td {...cell.getCellProps()}>
-                          <div className='contact-options'>
-                            <i
-                              className='fas fa-pencil-alt'
-                              onClick={() =>
-                                onClickEdit(cell.row.original.id)
-                              }></i>
-                            <i
-                              className='fas fa-trash-alt'
-                              onClick={() =>
-                                onClickDelete(cell.row.original.id)
-                              }></i>
-                          </div>
-                        </td>
-                      );
-                    default:
-                      return (
-                        <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
-                      );
-                  }
+                  return (
+                    <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                  );
                 })}
-              </tr>
+              </motion.tr>
             );
           })}
         </tbody>
