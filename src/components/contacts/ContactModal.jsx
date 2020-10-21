@@ -1,8 +1,9 @@
 import React, { useState, useContext } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import InputMask from 'react-input-mask';
+import Modal from 'react-modal';
 import { ContactContext } from '../../context/contactState';
 import * as types from '../../context/types';
-import Modal from 'react-modal';
 
 const customStyles = {
   content: {
@@ -122,7 +123,8 @@ const ContactModal = ({ isOpen, closeModal, currentId }) => {
           </div>
           <div>
             <label htmlFor='phone'>Telefone</label>
-            <input
+            <InputMask
+              mask='(99)99999-9999'
               name='phone'
               type='text'
               className='phone'
