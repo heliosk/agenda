@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import { ContactContext } from '../../context/contactState';
-import * as types from '../../context/types';
 import Modal from 'react-modal';
 
 const customStyles = {
@@ -21,16 +20,12 @@ const customStyles = {
 };
 
 const ContactRemoveModal = ({ isOpen, closeModal, currentId }) => {
-  const { contactDispatch } = useContext(ContactContext);
+  const { deleteContact } = useContext(ContactContext);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    contactDispatch({
-      type: types.DELETE_CONTACT,
-      payload: currentId,
-    });
-
+    deleteContact(currentId);
     closeModal();
   };
 

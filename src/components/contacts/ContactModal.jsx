@@ -3,7 +3,6 @@ import { v4 as uuidv4 } from 'uuid';
 import InputMask from 'react-input-mask';
 import Modal from 'react-modal';
 import { ContactContext } from '../../context/contactState';
-import * as types from '../../context/types';
 
 const customStyles = {
   content: {
@@ -23,7 +22,13 @@ const customStyles = {
 };
 
 const ContactModal = ({ isOpen, closeModal, currentId }) => {
-  const { contactState, contactDispatch } = useContext(ContactContext);
+  const {
+    contactState,
+    addContact,
+    updateContact,
+    setCurrentContact,
+    clearCurrentContact,
+  } = useContext(ContactContext);
   const [isEditMode, setIsEditMode] = useState(false);
 
   const initialState = {
@@ -56,31 +61,17 @@ const ContactModal = ({ isOpen, closeModal, currentId }) => {
     closeModal();
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const { id, name, email, phone } = formData;
+    const { id } = formData;
 
     if (isEditMode) {
-      contactDispatch({
-        type: types.UPDATE_CONTACT,
-        payload: {
-          id,
-          name,
-          email,
-          phone,
-        },
-      });
+      clearCurrentContact();
+      updateContact(formData);
     } else {
-      contactDispatch({
-        type: types.ADD_CONTACT,
-        payload: {
-          id,
-          name,
-          email,
-          phone,
-        },
-      });
+      addContact(formData);
+      setCurrentContact(id);
     }
 
     handleCloseModal();

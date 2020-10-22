@@ -1,6 +1,5 @@
 import React, { useState, useContext, useRef } from 'react';
 import { ContactContext } from '../context/contactState';
-import * as types from '../context/types';
 import ContactModal from './contacts/ContactModal';
 import ButtonWithIcon from './ButtonWithIcon';
 
@@ -8,7 +7,9 @@ import IcLogo from '../images/ic-logo.svg';
 import IcSearch from '../images/ic-search.svg';
 
 const Header = () => {
-  const { contactState, contactDispatch } = useContext(ContactContext);
+  const { contactState, getContact, clearCurrentContact } = useContext(
+    ContactContext
+  );
   const [showModal, setShowModal] = useState(false);
 
   const text = useRef('');
@@ -18,10 +19,11 @@ const Header = () => {
   };
 
   const onChange = () => {
-    contactDispatch({
-      type: types.FIND_CONTACT,
-      payload: text.current.value,
-    });
+    if (contactState.current) {
+      clearCurrentContact();
+    }
+
+    getContact(text.current.value);
   };
 
   return (

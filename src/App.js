@@ -7,7 +7,7 @@ import './App.scss';
 const App = () => {
   return (
     <BrowserRouter>
-      <Route path='/' exact component={HomeScreen} />
+      <Route path='/agenda' exact component={HomeScreen} />
     </BrowserRouter>
   );
 };

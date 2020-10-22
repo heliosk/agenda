@@ -6,6 +6,7 @@ const contactReducer = (state, action) => {
       return {
         contacts: [...state.contacts, action.payload],
       };
+
     case types.FIND_CONTACT:
       return {
         ...state,
@@ -18,6 +19,7 @@ const contactReducer = (state, action) => {
           );
         }),
       };
+
     case types.UPDATE_CONTACT:
       return {
         ...state,
@@ -25,6 +27,20 @@ const contactReducer = (state, action) => {
           contact.id === action.payload.id ? action.payload : contact
         ),
       };
+
+    case types.CURRENT_CONTACT:
+      return {
+        ...state,
+        current: action.payload,
+      };
+
+    case types.CLEAR_CURRENT_CONTACT: {
+      return {
+        ...state,
+        current: null,
+      };
+    }
+
     case types.DELETE_CONTACT:
       return {
         ...state,
@@ -32,6 +48,7 @@ const contactReducer = (state, action) => {
           (contact) => contact.id !== action.payload
         ),
       };
+
     default:
       return state;
   }

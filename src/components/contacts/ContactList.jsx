@@ -78,7 +78,7 @@ const ContactList = () => {
   };
 
   const backgroundColor = (itemInserted) => {
-    return itemInserted
+    return itemInserted === contactState.current
       ? {
           animate: { backgroundColor: ['#fff3f2', '#f8f9fd'] },
           transition: { delay: '10', duration: 1 },
@@ -122,12 +122,11 @@ const ContactList = () => {
           {rows.map((row) => {
             prepareRow(row);
 
-            let itemInserted = Number(row.id) === rows.length - 1;
-
             return (
               <motion.tr
+                id={row.original.id}
                 {...row.getRowProps()}
-                {...backgroundColor(itemInserted)}>
+                {...backgroundColor(row.original.id)}>
                 {row.cells.map((cell) => {
                   return (
                     <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
