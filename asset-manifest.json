@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/agenda/static/css/main.1a76c127.chunk.css",
+    "main.js": "/agenda/static/js/main.17430070.chunk.js",
+    "main.js.map": "/agenda/static/js/main.17430070.chunk.js.map",
+    "runtime-main.js": "/agenda/static/js/runtime-main.ac52f630.js",
+    "runtime-main.js.map": "/agenda/static/js/runtime-main.ac52f630.js.map",
+    "static/js/2.3a4cba37.chunk.js": "/agenda/static/js/2.3a4cba37.chunk.js",
+    "static/js/2.3a4cba37.chunk.js.map": "/agenda/static/js/2.3a4cba37.chunk.js.map",
+    "index.html": "/agenda/index.html",
+    "precache-manifest.87d1d5f956986f831fa617b6b9923d13.js": "/agenda/precache-manifest.87d1d5f956986f831fa617b6b9923d13.js",
+    "service-worker.js": "/agenda/service-worker.js",
+    "static/css/main.1a76c127.chunk.css.map": "/agenda/static/css/main.1a76c127.chunk.css.map",
+    "static/js/2.3a4cba37.chunk.js.LICENSE.txt": "/agenda/static/js/2.3a4cba37.chunk.js.LICENSE.txt",
+    "static/media/ic-book.svg": "/agenda/static/media/ic-book.de526db5.svg",
+    "static/media/ic-logo.svg": "/agenda/static/media/ic-logo.190ff2d8.svg",
+    "static/media/ic-search.svg": "/agenda/static/media/ic-search.8fd12e49.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.ac52f630.js",
+    "static/js/2.3a4cba37.chunk.js",
+    "static/css/main.1a76c127.chunk.css",
+    "static/js/main.17430070.chunk.js"
+  ]
+}
